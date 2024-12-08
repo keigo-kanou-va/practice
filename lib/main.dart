@@ -38,51 +38,17 @@ class MyHomePage extends StatefulWidget {
 
 //_MyHomePageStateを定義
 class _MyHomePageState extends State<MyHomePage> {
-  //_counterは_MyHomePageState内でのみ参照可能
-  int _counter = 0;
-  var mycolor = Colors.yellow;
-
-  void _incrementCounter() {
-    //setStateで状態更新
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (_counter == 3) {
-      mycolor = Colors.blue;
-    } else {
-      mycolor = Colors.red;
-    }
-
-    String S_color = mycolor.toString();
-
     return Scaffold(
-      backgroundColor: mycolor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              '$S_color'
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+        child: Image.network('https://s.animeanime.jp/imgs/p/X2bKTbbkhKNuuQZDts1HWTagH66grq_oqaqr/303592.jpg',
+                width: 300,
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
