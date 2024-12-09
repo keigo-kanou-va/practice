@@ -38,6 +38,34 @@ class MyHomePage extends StatefulWidget {
 
 //_MyHomePageStateを定義
 class _MyHomePageState extends State<MyHomePage> {
+
+
+  void showRobot() {
+
+  List<String> hands = ['グー', 'チョキ', 'パー'];
+
+  hands.shuffle();
+
+  String hand = hands[0];
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            //title: Text('Dialog'),
+            content: Text('ケン君は${hand}を出しました'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,8 +74,16 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Image.network('https://s.animeanime.jp/imgs/p/X2bKTbbkhKNuuQZDts1HWTagH66grq_oqaqr/303592.jpg',
-                width: 300,
+        child: Column(
+          children: [
+            Text('じゃんけん！'),
+            ElevatedButton(
+              onPressed: () {
+                showRobot();
+              },
+              child: const Text('ぽん！！'),
+            ),
+          ],
         ),
       ),
     );
