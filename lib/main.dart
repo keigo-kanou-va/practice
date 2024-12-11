@@ -38,7 +38,6 @@ class MyHomePage extends StatefulWidget {
 
 //_MyHomePageStateを定義
 class _MyHomePageState extends State<MyHomePage> {
-
   void showRobot(id) {
     var comment = '';
 
@@ -75,39 +74,36 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  showRobot(0);
-                },
-                child: const Text('ログイン'),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  showRobot(1);
-                },
-                child: const Text('新規登録'),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: TextButton(
-                onPressed: () {
-                  showRobot(2);
-                },
-                child: const Text('パスワードを忘れた方はこちら'),
-              ),
-            ),
-          ],
-        ),
+      body: ListView(
+        children: [
+          ListTile(
+            leading: Icon(Icons.phone),
+            title: Text('11111'),
+            subtitle: Text('080-2222-3333'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {
+              showRobot(1);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.phone),
+            title: Text('11111'),
+            subtitle: Text('080-2222-3333'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+          ),
+          ListTile(
+            leading: Icon(Icons.phone),
+            title: Text('11111'),
+            subtitle: Text('080-2222-3333'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+          ),
+          ListTile(
+            leading: Icon(Icons.phone),
+            title: Text('11111'),
+            subtitle: Text('080-2222-3333'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+          ),
+        ],
       ),
     );
   }
