@@ -39,21 +39,23 @@ class MyHomePage extends StatefulWidget {
 //_MyHomePageStateを定義
 class _MyHomePageState extends State<MyHomePage> {
 
+  void showRobot(id) {
+    var comment = '';
 
-  void showRobot() {
-
-  List<String> hands = ['グー', 'チョキ', 'パー'];
-
-  hands.shuffle();
-
-  String hand = hands[0];
+    if (id == 0) {
+      comment = 'ログインに成功しました';
+    } else if (id == 1) {
+      comment = '新規登録に成功しました';
+    } else if (id == 2) {
+      comment = 'パスワードの変更に成功しました';
+    }
 
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             //title: Text('Dialog'),
-            content: Text('ケン君は${hand}を出しました'),
+            content: Text(comment),
             actions: [
               TextButton(
                 onPressed: () {
@@ -75,13 +77,34 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('じゃんけん！'),
-            ElevatedButton(
-              onPressed: () {
-                showRobot();
-              },
-              child: const Text('ぽん！！'),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  showRobot(0);
+                },
+                child: const Text('ログイン'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  showRobot(1);
+                },
+                child: const Text('新規登録'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: TextButton(
+                onPressed: () {
+                  showRobot(2);
+                },
+                child: const Text('パスワードを忘れた方はこちら'),
+              ),
             ),
           ],
         ),
