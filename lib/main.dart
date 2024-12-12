@@ -67,44 +67,33 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
+  double number = 0.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: ListView(
-        children: [
-          ListTile(
-            leading: Icon(Icons.phone),
-            title: Text('11111'),
-            subtitle: Text('080-2222-3333'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              showRobot(1);
-            },
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(widget.title),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('センチ'),
+              TextField(
+                onChanged: (value) {
+                  setState(() {
+                    number = (double.tryParse(value) ?? 0) * 0.1;
+                  });
+                },
+                //const Text('センチを入力してください'),
+              ),
+              SizedBox(height: 16,),
+              Text('結果：${number}メートル'),
+            ],
           ),
-          ListTile(
-            leading: Icon(Icons.phone),
-            title: Text('11111'),
-            subtitle: Text('080-2222-3333'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-          ),
-          ListTile(
-            leading: Icon(Icons.phone),
-            title: Text('11111'),
-            subtitle: Text('080-2222-3333'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-          ),
-          ListTile(
-            leading: Icon(Icons.phone),
-            title: Text('11111'),
-            subtitle: Text('080-2222-3333'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }
