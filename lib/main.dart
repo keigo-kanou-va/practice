@@ -67,7 +67,9 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
-  double number = 0.0;
+  double h = 0.0;
+  double w = 0.0;
+  double BMI = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -81,17 +83,32 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('センチ'),
+              Text('身長'),
               TextField(
                 onChanged: (value) {
-                  setState(() {
-                    number = (double.tryParse(value) ?? 0) * 0.1;
-                  });
+                    h = (double.tryParse(value) ?? 0);
+                },
+                //const Text('センチを入力してください'),
+              ),
+              SizedBox(height: 24,),
+              Text('体重'),
+              TextField(
+                onChanged: (value) {
+                    w = (double.tryParse(value) ?? 0) ;
                 },
                 //const Text('センチを入力してください'),
               ),
               SizedBox(height: 16,),
-              Text('結果：${number}メートル'),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                          BMI = h * w;
+                  });
+                },
+                child: Text('計算'),
+              ),
+              SizedBox(height: 32,),
+              Text('結果：${BMI}'),
             ],
           ),
         ));
