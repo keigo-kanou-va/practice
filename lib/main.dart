@@ -1,3 +1,4 @@
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:3758837043.
 import 'package:flutter/material.dart';
 
 void main() {
@@ -38,39 +39,7 @@ class MyHomePage extends StatefulWidget {
 
 //_MyHomePageStateを定義
 class _MyHomePageState extends State<MyHomePage> {
-  void showRobot(id) {
-    var comment = '';
-
-    if (id == 0) {
-      comment = 'ログインに成功しました';
-    } else if (id == 1) {
-      comment = '新規登録に成功しました';
-    } else if (id == 2) {
-      comment = 'パスワードの変更に成功しました';
-    }
-
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            //title: Text('Dialog'),
-            content: Text(comment),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        });
-  }
-
-  double h = 0.0;
-  double w = 0.0;
-  double BMI = 0.0;
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,37 +49,87 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('身長'),
-              TextField(
-                onChanged: (value) {
-                    h = (double.tryParse(value) ?? 0);
-                },
-                //const Text('センチを入力してください'),
-              ),
-              SizedBox(height: 24,),
-              Text('体重'),
-              TextField(
-                onChanged: (value) {
-                    w = (double.tryParse(value) ?? 0) ;
-                },
-                //const Text('センチを入力してください'),
-              ),
-              SizedBox(height: 16,),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                          BMI = h * w;
-                  });
-                },
-                child: Text('計算'),
-              ),
-              SizedBox(height: 32,),
-              Text('結果：${BMI}'),
-            ],
+          child: ElevatedButton(
+            onPressed: () {
+               Navigator.of(context).push<void>( 
+               MaterialPageRoute(
+               builder: (context) => const DetailPage(),
           ),
-        ));
+        );
+            }, 
+            child: Text('次へ'),
+            )
+        ),
+    );
+  }
+}
+
+class DetailPage extends StatelessWidget {
+  const DetailPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text('詳細ページ'),
+        ),
+        body: 
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      showModalBottomSheet<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const Detail2Page();
+                          },
+                          isScrollControlled: true, // フルスクリーンで表示
+                        );
+                    }, 
+                    child: Text('また次へ'),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push<void>( 
+                      MaterialPageRoute(
+                      builder: (context) => const Detail2Page(),
+                      ),
+                      );// モーダルを閉じる
+                    }, 
+                    child: Text('戻る'),
+                    ),
+                ],
+              ),
+            ),
+        );
+  }
+}
+
+class Detail2Page extends StatelessWidget {
+  const Detail2Page({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('最終ページ'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+        child: ElevatedButton(
+            onPressed: () {
+            Navigator.of(context).pop(); // モーダルを閉じる
+            }, 
+          child: const Text('終点'),
+            ),
+        ), 
+        );
   }
 }
