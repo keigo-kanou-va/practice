@@ -39,6 +39,12 @@ class MyHomePage extends StatefulWidget {
 
 //_MyHomePageStateを定義
 class _MyHomePageState extends State<MyHomePage> {
+  List<Map<String, dynamic>> contacts = [
+    {'name': 'kego', 'number': '080-2331-9298', 'address': '千葉'},
+    {'name': 'kego2', 'number': '090-2331-9298', 'address': '千葉2'},
+    {'name': 'kego3', 'number': '000-2331-9298', 'address': '千葉3'},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,93 +52,55 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push<void>(
+      body: ListView.builder(
+        itemCount: contacts.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(contacts[index]['name']),
+            subtitle: Text(contacts[index]['number']),
+            onTap: () {
+              Navigator.push(
+                context,
                 MaterialPageRoute(
-                  builder: (context) => const DetailPage(),
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:596375294.
+                  builder: (context) => DetailPage(contact: contacts[index]),
                 ),
               );
             },
-            child: Text('次へ'),
-          )),
+          );
+        },
+      ),
     );
   }
 }
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('詳細ページ'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                showModalBottomSheet<void>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Detail2Page(id: 1, name: 'モーダル',);
-                  },
-                  isScrollControlled: true, // フルスクリーンで表示
-                );
-              },
-              child: Text('また次へ'),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push<void>(
-                  MaterialPageRoute(
-                    builder: (context) => Detail2Page(id: 2, name: 'プッシュ',),
-                  ),
-                ); // モーダルを閉じる
-              },
-              child: Text('戻る'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class Detail2Page extends StatelessWidget {
-  Detail2Page({
+  const DetailPage({
     super.key,
-    required this.id,
-    required this.name,
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:4287042695.
+    required this.contact,
   });
 
-  final int id;
-  final String name;
+  final Map<String, dynamic> contact;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('最終ページ'),
+        title: Text(contact['name']),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pop(); // モーダルを閉じる
-          },
-          child: Text('id = ${id}、name = ${name}'),
-        ),
+      body: Column(
+        children: [
+          Text('名前: ${contact['name']}'),
+          Text('電話番号: ${contact['number']}'),
+          Text('住所: ${contact['address']}'),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('戻る'))
+        ],
       ),
     );
   }
