@@ -67,7 +67,57 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Text('状態：${isChecked}'),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MySlider()),
+                );
+              },
+              child: Text('次へ'))
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class MySlider extends StatefulWidget {
+  const MySlider({super.key});
+
+  @override
+  State<MySlider> createState() => _MySliderState();
+}
+
+class _MySliderState extends State<MySlider> {
+
+  double _current = 20;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:3726094301.
+      appBar: AppBar(
+        title: const Text('Slider'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Slider(
+              value: _current,
+              min: 0,
+              max: 100,
+              label: _current.round().toString(),
+              onChanged: (double value) {
+                setState(() {
+                  _current = value;
+                });
+              }
+            ),
+            Text('value = ${_current.round()}'),
+          ]
         ),
       ),
     );
