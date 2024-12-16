@@ -21,86 +21,54 @@ class MyApp extends StatelessWidget {
       ),
 
       //homeはMyHomePageクラスを呼び出し
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
-//MyHomePageクラスを定義
-//ステートフルWidget
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-//_MyHomePageStateを定義
 class _MyHomePageState extends State<MyHomePage> {
-  List<Map<String, dynamic>> contacts = [
-    {'name': 'kego', 'number': '080-2331-9298', 'address': '千葉'},
-    {'name': 'kego2', 'number': '090-2331-9298', 'address': '千葉2'},
-    {'name': 'kego3', 'number': '000-2331-9298', 'address': '千葉3'},
-  ];
+  bool isChecked = false;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: ListView.builder(
-        itemCount: contacts.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(contacts[index]['name']),
-            subtitle: Text(contacts[index]['number']),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:596375294.
-                  builder: (context) => DetailPage(contact: contacts[index]),
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
+  void _ChangeBox() {
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:417941161.
+    setState(() {
+      isChecked = !isChecked;
+    });
   }
-}
-
-class DetailPage extends StatelessWidget {
-  const DetailPage({
-    super.key,
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:4287042695.
-    required this.contact,
-  });
-
-  final Map<String, dynamic> contact;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('check'),
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:330172529.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(contact['name']),
       ),
-      body: Column(
-        children: [
-          Text('名前: ${contact['name']}'),
-          Text('電話番号: ${contact['number']}'),
-          Text('住所: ${contact['address']}'),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('戻る'))
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 100.0),
+              child: CheckboxListTile(
+                title: const Text('check'),
+                controlAffinity: ListTileControlAffinity.leading,
+                value: isChecked,
+                onChanged: (value) {
+                  _ChangeBox();
+                },
+              ),
+            ),
+            Text('状態：${isChecked}'),
+          ],
+        ),
       ),
     );
   }
