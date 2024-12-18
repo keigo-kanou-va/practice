@@ -22,7 +22,28 @@ class MyApp extends StatelessWidget {
       ),
 
       //homeはMyHomePageクラスを呼び出し
-      home: const WatchPage(),
+      home: const ImagePage(),
+    );
+  }
+}
+
+class ImagePage extends StatelessWidget {
+  const ImagePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Watch'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      ),
+      body: Center(
+        child: Image.network(
+          'https://1.bp.blogspot.com/-SWOiphrHWnI/XWS5x7MYwHI/AAAAAAABUXA/i_PRL_Atr08ayl9sZy9-x0uoY4zV2d5xwCLcBGAs/s1600/pose_dance_ukareru_man.png',
+          width: 40,
+          height: 40,
+        ),
+      ),
     );
   }
 }
