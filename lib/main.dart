@@ -1,6 +1,6 @@
 // Suggested code may be subject to a license. Learn more: ~LicenseLog:3758837043.
 import 'package:flutter/material.dart';
-import 'dart:async';
+import 'dart:math';
 
 void main() {
   //mainでMyAppを呼び出し
@@ -35,39 +35,36 @@ class WatchPage extends StatefulWidget {
 }
 
 class _WatchPageState extends State<WatchPage> {
-  Timer timer = Timer(Duration.zero, () {});
-  final Stopwatch _stopwatch = Stopwatch();
-  String _time = '00:00:000';
+  int AI_Number = Random().nextInt(100) + 1;
+  String? _message;
+  final _controller = TextEditingController();
+  int count = 0;
 
-  void _startTimer() {
-    if (!_stopwatch.isRunning) {
-      _stopwatch.start();
-
-      timer = Timer.periodic(Duration(milliseconds: 1), (timer) {
-        setState(() {
-          final Duration elapsed = _stopwatch.elapsed;
-          final String minute = elapsed.inMinutes.toString().padLeft(2, '0');
-          final String sec =
-              (elapsed.inSeconds % 60).toString().padLeft(2, '0');
-          final String millisec =
-              (elapsed.inMilliseconds % 1000).toString().padLeft(3, '0');
-          _time = '$minute:$sec:$millisec';
-        });
-      });
-    }
+  void _hit() {
+    setState(() {
+      int? userNumber = int.tryParse(_controller.text);
+      if (userNumber == null || userNumber < 1 || userNumber > 100) {
+        _message = '正しく入力してください\n（数字の1 - 100のみ有効）';
+      } else if (userNumber == AI_Number) {
+        count++;
+        _message = '正解です！\n${count}回目で当たりました！';
+      } else if (userNumber > AI_Number) {
+        _message = 'もっと小さいです';
+        count++;
+      } else {
+        _message = 'もっと大きいです';
+        count++;
+      }
+    });
   }
 
-  void _stopTimer() {
-    if (_stopwatch.isRunning) {
-      _stopwatch.stop();
-      timer.cancel();
-    }
-  }
-
-  void _resetTimer() {
-    _stopwatch.reset();
-    _time = '00:00:000';
-    setState(() {});
+  void _restart() {
+    setState(() {
+      AI_Number = Random().nextInt(100) + 1;
+      _message = null;
+      count = 0;
+      _controller.text = '';
+    });
   }
 
   @override
@@ -78,47 +75,40 @@ class _WatchPageState extends State<WatchPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              _time,
-              style: TextStyle(fontSize: 40),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text('私が思いつかべている数字を当ててください\n（1 - 100)'),
+          if (_message != null)
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Text(_message!, style: TextStyle(fontSize: 20)),
+                    Text('count: $count'),
+                  ],
+                )),
+          TextField(
+            decoration: InputDecoration(
+              labelText: '数字を入力してください',
+              border: OutlineInputBorder(),
             ),
-            Text('stop watch'),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    _startTimer();
-                  },
-                  child: Text('スタート'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    _stopTimer();
-                  },
-                  child: Text('ストップ'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    _resetTimer();
-                  },
-                  child: Text('リセット'),
-                ),
-              ],
-            ),
-            TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MySlider()),
-                  );
-                },
-                child: Text('次へ')),
-          ],
-        ),
+            controller: _controller,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              _hit();
+            },
+            child: Text('送信'),
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              _restart();
+            },
+            child: Text('リスタート'),
+          ),
+        ]),
       ),
     );
   }
