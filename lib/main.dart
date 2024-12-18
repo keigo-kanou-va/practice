@@ -108,7 +108,15 @@ class _WatchPageState extends State<WatchPage> {
                   child: Text('リセット'),
                 ),
               ],
-            )
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MySlider()),
+                  );
+                },
+                child: Text('次へ')),
           ],
         ),
       ),
